@@ -16,7 +16,7 @@ app.get('/game', function(req, res) {
     res.send(pug.renderFile(__dirname + '/templates/game.pug'));
 });
 
-server.listen(8080, function() {
+server.listen(process.env.PORT || 8080, function() {
     console.log('listening on *:8080');
 });
 
