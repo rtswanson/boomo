@@ -166,6 +166,14 @@ Game.prototype.allDraw = function(number, exclude) {
     }
 }
 
+Game.prototype.allDrawUp = function(){
+    for (var p of this.players.values()) {
+        if (p.lives > 0 && p.hand.length < 7 ) {
+            this.playerDrawCards(p, 7 - p.hand.length);
+        }
+    }
+}
+
 Game.prototype.playerHasCardWhichChangesNumber = function(player) {
     var result = false;
     for (var c of this.getPlayer(player).hand) {
@@ -199,6 +207,7 @@ Game.prototype.playCard = function(player, card) {
                         next.turns_to_take += 1;
                     } else {
                         this.playerLooseLife(next);
+                        this.allDrawUp();
                     }
                 }
                 if (card == 'draw1') this.allDraw(1, player);
@@ -226,12 +235,14 @@ Game.prototype.playCard = function(player, card) {
                     console.log(player.name, 'exceeded timer');
                     this.playerLooseLife(player);
                     this.bomb_timer = 0;
+                    this.allDrawUp();
                 }
                 for (var i of this.players.values()) {
                     if (i.active && i.lives > 0 && i.hand.length == 0) {
                         console.log(i.name, 'has no cards!');
                         for (var p of this.players.values()) {
                             if (p != i) this.playerLooseLife(p);
+                            this.allDrawUp();
                         }
                     }
                 }
