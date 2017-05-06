@@ -208,6 +208,7 @@ Game.prototype.playCard = function(player, card) {
                     } else {
                         this.playerLooseLife(next);
                         this.allDrawUp();
+                        this.bomb_timer = 0;
                     }
                 }
                 if (card == 'draw1') this.allDraw(1, player);
@@ -243,6 +244,7 @@ Game.prototype.playCard = function(player, card) {
                         for (var p of this.players.values()) {
                             if (p != i) this.playerLooseLife(p);
                             this.allDrawUp();
+                            this.bomb_timer = 0;
                         }
                     }
                 }
